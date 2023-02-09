@@ -12,6 +12,7 @@ const connectDB = require('./config/connectDB');
 connectDB();
 // 6 routes
 app.use('/api/products', require('./routes/productlist'));
+app.use('/api/users', require ('./routes/users'));
 //4 create PORT         
 const PORT = process.env.PORT
 
