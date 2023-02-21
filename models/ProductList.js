@@ -15,7 +15,11 @@ const productListSchema = new schema ({
 
     link :{
          type:String,
-    }
+    },
+//cloudinary 
+    profile_img: String,
+
+    cloudinary_id: String
     
     
 });

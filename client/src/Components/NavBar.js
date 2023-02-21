@@ -1,6 +1,13 @@
 import React from 'react'
 import {Navbar,Nav,NavDropdown , Form, Container , Button } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../JS/Action/user';
 const NavBar = () => {
+  const isAuth = useSelector((state) => state.userReducer.isAuth);
+  const admin =useSelector((State) => State.adminReducer.admin);
+  const isAuthAdmin = useSelector((State) => State.adminReducer.isAuthAdmin);
+  
+  const dispatch = useDispatch();
   return (
     <div>
          <Navbar bg="light" expand="lg">
@@ -14,10 +21,15 @@ const NavBar = () => {
             navbarScroll
           >
             <Nav.Link href="/">Home</Nav.Link>
+            {
+              isAuth ? ( <Nav.Link href="/"><button onClick={()=>dispatch(logout())}>logout</button></Nav.Link>) : 
+              (<div>
             <Nav.Link href="/products">Products</Nav.Link>
             <Nav.Link href="/add">Add</Nav.Link>
-            <Nav.Link href="/login">Login</Nav.Link>
-            <Nav.Link href="/register">Register</Nav.Link>
+              </div>)
+            }
+            
+           
             <NavDropdown title="Link" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
@@ -31,6 +43,7 @@ const NavBar = () => {
             <Nav.Link href="#" disabled>
               Link
             </Nav.Link>
+           
           </Nav>
           <Form className="d-flex">
             <Form.Control
@@ -41,6 +54,7 @@ const NavBar = () => {
             />
             <Button variant="outline-success">Search</Button>
             <Nav.Link href="/login">Login</Nav.Link>
+            <p>/</p>
             <Nav.Link href="/register">Register</Nav.Link>
           </Form>
         </Navbar.Collapse>

@@ -45,8 +45,22 @@ exports.login = async (req, res) => {
             process.env.SECRET_KEY,
             {expiresIn:'1h'}
         )
-        res.status(200).send({msg : 'login succesfully', user: foundUser, token})
+        res.status(200).send({msg : 'login succesfully', users: foundUser, token})
     } catch (error) {
         res.status(400).send({errors : [{msg : 'cannot login'}]})
     }
 };
+
+//cloudinary 
+
+
+//get all users 
+
+exports.usersToGet = async(req,res) => {
+    try {
+        const listUsers = await Users.find();
+        res.status(200).send({msg :'users list', listUsers})
+    } catch (error) {
+        res.status(400).send({msg :'cannot get all users' ,error})
+    }
+}

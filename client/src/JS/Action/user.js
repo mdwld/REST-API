@@ -8,24 +8,27 @@ import axios from "axios";
 export const register = (newUser) => async (dispatch) => {
     dispatch({type : LOAD_USER})
     try {
-        let result = await axios.post('api/users/register', newUser);
+        let result = await axios.post('/api/users/register', newUser);
         dispatch({type : SUCC_USER, payload: result.data}) 
     } catch (error) {
         dispatch({type: FAIL_USER, payload : error.response.data.errors});
     }
 };
-
+    
 //login
 
 export const login = (user) => async (dispatch) => {
     dispatch({type: LOAD_USER})
     try {
-        let resule = await axios.post('api/users/login', user);
+        let resule = await axios.post('/api/users/login', user);
         dispatch ({type : SUCC_USER, payload: resule.data})
     } catch (error) {
         dispatch({type: FAIL_USER, payload : error.response.data.errors})
     }
 };
+
+
+
 //current
 export const current = () => async(dispatch) => {
     dispatch({type: LOAD_USER})

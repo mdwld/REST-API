@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import {Routes,Route} from 'react-router-dom';
 import Home from './Pages/Home';
@@ -10,7 +10,16 @@ import NavBar from './Components/NavBar';
 import Profile from './Pages/Profile';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
+import { useDispatch } from 'react-redux';
+import { current } from './JS/Action/user';
 function App() {
+  const dispatch = useDispatch();
+useEffect(() => {
+  if(localStorage.getItem("token")){
+    dispatch(current());
+  }
+}, [dispatch]);
+
   return (
     <div className="App">
       <NavBar/>

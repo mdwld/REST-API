@@ -20,7 +20,8 @@ try {
 export const addProduct = (newProduct) => async(dispatch) => {
     dispatch({type: LOAD_PRODUCT}); 
     try {
-        await axios.post('/api/products/add', newProduct);
+        await axios.post('/api/products/add', newProduct)
+                    .then((result)=>console.log(result.data));
         dispatch(getProducts());
     } catch (error) {
         dispatch({type : FAIL_PRODUCT, payload: error.response});
@@ -40,9 +41,9 @@ export const deleteProduct = (id) => async (dispatch) => {
 
 //EDIT PRODUCT 
 
-export const editProduct = (id, newProduct) => async (dispatch) => {
+export const editProduct = (id, form) => async (dispatch) => {
     try {
-        await axios.put(`/api/products/${id}`, newProduct);
+        await axios.put(`/api/products/${id}`, form);
         dispatch(getProducts());
     } catch (error) {
         dispatch ({type: FAIL_PRODUCT , payload : error.response});

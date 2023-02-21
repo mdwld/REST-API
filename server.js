@@ -9,10 +9,15 @@ require('dotenv').config();
 app.use(express.json());
 //5 connect DB
 const connectDB = require('./config/connectDB');
-connectDB();
+connectDB(); 
+
+// (cloudinary) parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
 // 6 routes
 app.use('/api/products', require('./routes/productlist'));
 app.use('/api/users', require ('./routes/users'));
+app.use('/api/admin', require('./routes/admin'));
 //4 create PORT         
 const PORT = process.env.PORT
 
