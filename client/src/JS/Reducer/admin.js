@@ -27,7 +27,7 @@ const adminReducer = (State=initialState, {type,payload}) => {
                 case CURRENT_ADMIN:
                     return {...State, admin: payload, loadAdmin:false, isAuthAdmin:true}
                     case GET_ALLUSERS:
-                        return{...State, lisUsers:payload, loadAdmin:false, isAuthAdmin:true}
+                        return{...State, listUsers:payload.listUsers, loadAdmin:false, isAuthAdmin:true}
                         case LOGOUT_ADMIN:
                             localStorage.removeItem('token')
                             return {...State, admin:null, 

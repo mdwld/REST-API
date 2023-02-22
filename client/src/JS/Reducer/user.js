@@ -26,7 +26,7 @@ const userReducer = (state=initialState, {type,payload}) => {
          case SUCC_USER:
             localStorage.setItem('token', payload.token)// !! to give token to the payload
             return {...state, loadUser: false, users: payload.users, isAuth: true};
-            //always veryfy that the users in the payload.users is the same as the route in DB
+            //always veryfi that the users in the payload.users is the same as the route in DB
             case FAIL_USER:
                 return {...state, loadUser: false, errors: payload};
                 case CURRENT_USER:

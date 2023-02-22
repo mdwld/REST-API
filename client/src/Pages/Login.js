@@ -3,15 +3,18 @@ import { useDispatch } from 'react-redux';
 import { login } from '../JS/Action/user';
 import {Form, Button} from 'react-bootstrap'; 
 import {Link} from 'react-router-dom';
+import { loginAdmin } from '../JS/Action/admin';
 
 const Login = () => {
   const [user, setUser] = useState({});
+  const [admin, setAdmin] = useState({});
   const dispatch = useDispatch();
   const handleChange = (e) => {
-    setUser({...user, [e.target.name]:e.target.value})
+    setUser({...user, [e.target.name]:e.target.value});
+    setAdmin({...admin, [e.target.name]:e.target.value});
   };
   const handleEnter = () => {
-    dispatch(login(user))
+    dispatch(login(user)) && dispatch(loginAdmin(admin))
   }
   return (
     <div>

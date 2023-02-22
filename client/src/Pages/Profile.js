@@ -4,13 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import{Card, Button} from 'react-bootstrap';
 import { uploadImg, getOneUser } from '../JS/Action/upload';
 import { useParams } from 'react-router-dom';
-
+import{currentAdmin} from '../JS/Action/admin';
 //import { Link } from 'react-router-dom';
 const Profile = () => {
   const user = useSelector((state) => state.userReducer.users);
+  const isAuth = useSelector((state) => state.userReducer.isAuth);
+  const isAuthAdmin = useSelector((State) => State.adminReducer.isAuthAdmin);
+  const admin = useSelector((State) => State.adminReducer.admin);
+
   //const userToGet = useSelector((state) => state.userReducer.userToGet);
  // const [image, setImage] = useState("");
   //setImage(...user, [user.profile_img] )
+
   const {id} = useParams();
  const userToGetRx = useSelector((state) => state.photoReducer.userToGet)
 
@@ -38,9 +43,14 @@ const handleAdd = () => {
 useEffect(() => {
   dispatch(getOneUser(id))
 })
+useEffect(() => {
+  dispatch(currentAdmin())
+},[dispatch])
 //an error handled when we add the pic in the cloudinary exactly when we click the upload button according to the "name: req.user" in the rootes of DB!!!!
   return (
     <div>
+    {isAuth? 
+      (<div>
         <Card style={{ width: '18rem' }}>
       <Card.Img variant="top" src={`${userToGetRx.profile_img}`} alt="avatar" />
 
@@ -55,9 +65,28 @@ useEffect(() => {
         <Button variant="primary">Go somewhere</Button>
       </Card.Body>
     </Card>
+</div>
+) : isAuthAdmin ? (
+      <div>
+        <Card style={{ width: '18rem' }}>
+      
+
+      <Card.Body>
+      
+      
+      
+        <Card.Title>{`${admin && admin.name}`}</Card.Title>
+        <Card.Title>{`${admin && admin.email}`}</Card.Title>
+        <Card.Title>{`${admin && admin.phone}`}</Card.Title>
+        
+        <Button variant="primary">Go somewhere</Button>
+      </Card.Body>
+    </Card>
 
     </div>
-  )
+    ):null}
+  </div>)
+  
 }
 
 export default Profile;

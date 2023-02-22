@@ -1,11 +1,11 @@
-import axios from "axios"
-import { LOAD_ADMIN, LOGIN_ADMIN, FAIL_ADMIN, CURRENT_ADMIN, LOGOUT_ADMIN, LOAD_USERS, GET_ALLUSERS } from "../ActionType/admin"
+import axios from "axios";
+import { LOAD_ADMIN, LOGIN_ADMIN, FAIL_ADMIN, CURRENT_ADMIN, LOGOUT_ADMIN, LOAD_USERS, GET_ALLUSERS } from "../ActionType/admin";
 
 
 
 
 
-export const loginAdmin = (admin) => async (req,res) => {
+export const loginAdmin = (admin) => async (dispatch) => {
     dispatch({type :LOAD_ADMIN})
     try {
         let result = await axios.post('/api/admin/loginAdmin',admin)
@@ -15,7 +15,7 @@ export const loginAdmin = (admin) => async (req,res) => {
     }
 };
 
-export const currentAdmin = () => async(req,res)=>{
+export const currentAdmin = () => async(dispatch)=>{
     dispatch({type:LOAD_ADMIN})
     try {
         const config = {
@@ -26,19 +26,19 @@ export const currentAdmin = () => async(req,res)=>{
         let result = await axios.get('/api/admin/currentAdmin',config)
         dispatch({type: CURRENT_ADMIN, payload : result.data})
     } catch (error) {
-        dimatch({type:FAIL_ADMIN , payload : error.response})
+        dispatch({type:FAIL_ADMIN , payload : error.response})
     }
 }; 
 
-export const logoutAdmin = () => async(req,res) => {
-    dipatch({type: LOGOUT_ADMIN})
+export const logoutAdmin = () => async(dispatch) => {
+    dispatch({type: LOGOUT_ADMIN})
 };
 
-export const getAllUsers = () => async(req,res) => {
+export const getAllUsers = () => async(dispatch) => {
     dispatch({type:LOAD_USERS})
     try {
         const result = await axios.get('/api/admin/users');
-        dispatch({type:GET_ALLUSERS, payload : result.data})//.listUsers
+        dispatch({type:GET_ALLUSERS, payload : result.data})//.listUsers why ? can be replaced in the adminReducer cos it must take the listUsers from the server (DB):)
     } catch (error) {
         console.log(error)
     }
