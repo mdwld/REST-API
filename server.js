@@ -1,5 +1,6 @@
 //1
 const express = require("express");
+
 //2
 const app = express();
 //3
@@ -18,6 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/products', require('./routes/productlist'));
 app.use('/api/users', require ('./routes/users'));
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api/historique', require('./routes/historique'));
+app.use('/api/subscription', require('./routes/subscription'));
 //4 create PORT         
 const PORT = process.env.PORT
 

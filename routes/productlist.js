@@ -3,6 +3,7 @@ const express = require ('express');
 const ProductList = require('../models/ProductList');
 const upload = require("../utils/multer");
 const cloudinary = require("../utils/cloudinary");
+const isAuth = require('../middleware/isAuth');
 // 2 express router
 const router = express.Router()
 
@@ -25,7 +26,9 @@ router.get('/test', (req,res)=>{
 router.post('/add', upload.single("profile_img"), async (req,res)=>{
     try {
         const {name , description, link, profile_img} = req.body;
-        const result = await cloudinary.uploader.upload(req.file.path);
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder:"F-LAMBDA PRODUCTS"
+        });
         const newProduct = new ProductList({
             name: req.body.name, 
             description: req.body.description, 
@@ -116,6 +119,21 @@ router.put('/:id', upload.single("profile_img"), async (req,res)=>{
     } catch (error) {
         res.status(400).send({msg:'product cannot be updated with this id', error})
     }
-})
+}); 
+
+//historique 
+router.patch('/:_id',isAuth, async(req,res)=>{
+    try {
+        const {_id}=req.params;
+    let productView = await ProductList.findOne({_id});
+    let userView = req.user;
+    productView.link === "" ? (productView.link = userView.name) : (productView.link = "checked");
+   await productView.save();
+    res.status(200).send({msg :'reviewed', productView})
+}catch{
+    res.status(400).send({msg :'not reviewd'})
+}
+});
+//historique
 // 'last' export
 module.exports = router ;

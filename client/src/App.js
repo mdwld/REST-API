@@ -14,8 +14,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { current } from './JS/Action/user';
 import {currentAdmin} from './JS/Action/admin';
 import Users from './Pages/Users';
-
+import { regSw , subscribe } from './helper';
+import Historique from './Pages/Historique';
 function App() {
+//Notification
+async function registerAndSubscribe () {
+  try {
+    const serviceWorkerReg = await regSw ();
+    await subscribe (serviceWorkerReg);
+  } catch (error) {
+    console.log (error);
+  }
+}
+
+//Notification 
   const isAuthAdmin = useSelector((State)=>State.adminReducer.isAuthAdmin);
   const dispatch = useDispatch();
 useEffect(() => {
@@ -30,7 +42,15 @@ useEffect(() => {
   }
 }, [dispatch]);
   return (
+
+    //Notification 
     <div className="App">
+    <button onClick={registerAndSubscribe}>
+      subscribe for push notifications
+    </button>
+ 
+  
+   
       <NavBar/>
      <h1>F-LAMBDA</h1>
      <Routes>
@@ -42,6 +62,7 @@ useEffect(() => {
 <Route path='/register' element={<Register />}/>
 <Route path='/login' element={<Login />}/>
 <Route path='/profile' element={<Profile />}/>
+<Route path='/allHistory' element={<Historique/>}/>
 {isAuthAdmin ? (<Route path='/users' element={<Users/>}/>):null}
      </Routes>
     </div>

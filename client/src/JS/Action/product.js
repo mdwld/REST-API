@@ -1,6 +1,6 @@
 // 1 importation 
 import axios from 'axios';
-import { FAIL_PRODUCT, LOAD_PRODUCT, ONE_PRODUCT, SUCC_PRODUCT } from "../ActionType/product"
+import { FAIL_PRODUCT, LOAD_PRODUCT, ONE_PRODUCT, REVIEW_PRODUCT, SUCC_PRODUCT } from "../ActionType/product"
 
 
 
@@ -58,5 +58,22 @@ export const getOneProduct = (id) => async (dispatch) => {
         dispatch({type: ONE_PRODUCT, payload: result.data});
     } catch (error) {
         dispatch({type: FAIL_PRODUCT , payloead: error.response})
+    }
+}
+
+//POST REVIEW
+export const postReview = (id) => async(dispatch) => {
+    dispatch({type:LOAD_PRODUCT})
+    try {
+        const config = {
+headers :{
+    authorization : localStorage.getItem('token')
+}
+        };
+        let result = await axios.patch(`/api/products/${id}`,config);
+        dispatch({type:REVIEW_PRODUCT, payload: result.data})
+        
+    } catch (error) {
+        dispatch({type:FAIL_PRODUCT, payload:error.response})
     }
 }

@@ -19,8 +19,12 @@ const productListSchema = new schema ({
 //cloudinary 
     profile_img: String,
 
-    cloudinary_id: String
-    
+    cloudinary_id: String ,
+
+    //viewedby : []
+     userview : String, 
+     productview : String,
+     emailuserview:String
     
 });
 module.exports = ProductList = mongoose.model('product', productListSchema)

@@ -7,7 +7,7 @@ const connectDB = async () => {
         mongoose.set('strictQuery',false);
         // step 1 
 
-await mongoose.connect(process.env.DB_URI, {useNewUrlParser:true});
+await mongoose.connect(process.env.DB_URI, {useNewUrlParser:true, useUnifiedTopology: true,});
         // step 2 
 console.log("Database connected");
 
